@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Dashboard — CareerNest</title>
+<meta name="description" content="Manage your profile, saved jobs, applications, and job postings."/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/responive.css">
+</head>
+<body>
+<header class="nav-wrap">
+  <nav class="nav glass">
+    <a href="index.html" class="brand"><span class="brand-mark">◆</span><span>CareerNest</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="jobs.html">Jobs</a></li>
+      <li><a href="companies.html">Companies</a></li>
+      <li><a href="dashboard.html" class="active">Dashboard</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button id="themeToggle" class="icon-btn" aria-label="Toggle theme">🌙</button>
+      <button id="hamburger" class="icon-btn hamburger" aria-label="Menu">☰</button>
+    </div>
+  </nav>
+</header>
+<section class="page-head">
+  <div class="container">
+    <h1>Your Dashboard</h1>
+    <p class="lead">Manage your profile, applications, and job postings in one place.</p>
+  </div>
+</section>
+<section class="container">
+  <div class="tabs">
+    <button class="tab active" data-tab="candidate">👤 Candidate</button>
+    <button class="tab" data-tab="employer">🏢 Employer</button>
+  </div>
+  <!-- CANDIDATE -->
+  <div class="tab-panel" data-panel="candidate">
+    <div class="dash-grid">
+      <div class="profile glass reveal">
+        <div class="avatar">JD</div>
+        <h3>Jane Doe</h3>
+        <p class="muted">Senior Frontend Engineer · Berlin</p>
+        <div class="profile-stats">
+          <div><strong id="savedCount">0</strong><small>Saved</small></div>
+          <div><strong id="appliedCount">0</strong><small>Applied</small></div>
+          <div><strong id="recentCount">0</strong><small>Recent</small></div>
+        </div>
+        <label class="upload">
+          📄 Upload Resume
+          <input type="file" id="resumeUpload" accept=".pdf,.doc,.docx" hidden/>
+        </label>
+        <p id="resumeName" class="muted small"></p>
+      </div>
+      <div>
+        <div class="section-head"><h2>Saved Jobs</h2></div>
+        <div id="savedJobsList" class="job-list small"></div>
+        <div class="section-head" style="margin-top:32px"><h2>Applied Jobs</h2></div>
+        <div id="appliedJobsList" class="job-list small"></div>
+        <div class="section-head" style="margin-top:32px"><h2>Recently Viewed</h2></div>
+        <div id="recentJobsList" class="job-list small"></div>
+      </div>
+    </div>
+  </div>
+  <!-- EMPLOYER -->
+  <div class="tab-panel hidden" data-panel="employer">
+    <div class="dash-grid">
+      <form id="postJobForm" class="glass post-form reveal">
+        <h3>Post a New Job</h3>
+        <label>Title<input name="title" required/></label>
+        <label>Company<input name="company" required/></label>
+        <label>Location<input name="location" required/></label>
+        <label>Category
+          <select name="category" required>
+            <option>Engineering</option><option>Design</option><option>Marketing</option>
+            <option>Data</option><option>Product</option><option>Finance</option>
+            <option>Support</option><option>Sales</option>
+          </select>
+        </label>
+        <label>Type
+          <select name="type"><option>Full-Time</option><option>Part-Time</option><option>Remote</option><option>Contract</option></select>
+        </label>
+        <label>Experience
+          <select name="experience"><option>Entry</option><option>Mid</option><option>Senior</option><option>Lead</option></select>
+        </label>
+        <div class="row">
+          <label>Min Salary (k)<input name="min" type="number" min="0" value="60" required/></label>
+          <label>Max Salary (k)<input name="max" type="number" min="0" value="90" required/></label>
+        </div>
+        <label>Description<textarea name="description" rows="4" required minlength="20"></textarea></label>
+        <button class="btn btn-primary" type="submit">Publish Job</button>
+      </form>
+      <div>
+        <div class="section-head"><h2>Your Postings</h2></div>
+        <div id="employerJobs" class="job-list small"></div>
+      </div>
+    </div>
+  </div>
+</section>
+<div id="toast" class="toast hidden"></div>
+<footer class="footer">
+  <div class="container foot-inner">
+    <div><span class="brand-mark">◆</span> CareerNest © 2026</div>
+    <div class="foot-links">
+      <a href="jobs.html">Jobs</a><a href="companies.html">Companies</a><a href="dashboard.html">Dashboard</a>
+    </div>
+  </div>
+</footer>
+<button id="toTop" class="to-top" aria-label="Back to top">↑</button>
+<script src="/js/app.js"></script>
+<script src="/js/jobs.js"></script>
+<script>
+
+  // Tabs
+  document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
+    t.classList.add('active');
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.add('hidden'));
+    document.querySelector(`.tab-panel[data-panel="${t.dataset.tab}"]`).classList.remove('hidden');
+  }));
+  
+  // Resume upload
+  const resumeInput = document.getElementById('resumeUpload');
+  const resumeName = document.getElementById('resumeName');
+  const savedResume = localStorage.getItem('cn_resume');
+  if(savedResume) resumeName.textContent = '📎 ' + savedResume;
+  resumeInput.addEventListener('change', e => {
+    const f = e.target.files[0];
+    if(f){ localStorage.setItem('cn_resume', f.name); resumeName.textContent = '📎 ' + f.name; toast('Resume uploaded'); }
+  });
+  function smallCard(j, opts={}){
+    return `<article class="job glass small">
+      <div class="job-head">
+        <div class="logo" style="background:${j.color}">${j.company[0]}</div>
+        <div><strong>${j.title}</strong><small>${j.company} · ${j.location}</small></div>
+      </div>
+      <div class="job-meta"><span class="chip mini">${j.type}</span><span class="chip mini">$${j.min}k–$${j.max}k</span></div>
+      <div class="job-actions">
+        <a class="btn btn-ghost" href="jobs.html?open=${j.id}">View</a>
+        ${opts.del ? `<button class="btn btn-danger" onclick="deletePost(${j.id})">Delete</button>` : ''}
+      </div>
+    </article>`;
+  }
+  function renderDash(){
+    const saved = JSON.parse(localStorage.getItem('cn_saved') || '[]');
+    const applied = JSON.parse(localStorage.getItem('cn_applied') || '[]');
+    const recent = JSON.parse(localStorage.getItem('cn_recent') || '[]');
+    const all = getAllJobs();
+    const byId = id => all.find(j => j.id === id);
+    const sj = saved.map(byId).filter(Boolean);
+    const aj = applied.map(byId).filter(Boolean);
+    const rj = recent.map(byId).filter(Boolean);
+    document.getElementById('savedCount').textContent = sj.length;
+    document.getElementById('appliedCount').textContent = aj.length;
+    document.getElementById('recentCount').textContent = rj.length;
+    document.getElementById('savedJobsList').innerHTML = sj.length ? sj.map(j=>smallCard(j)).join('') : '<p class="muted">No saved jobs yet.</p>';
+    document.getElementById('appliedJobsList').innerHTML = aj.length ? aj.map(j=>smallCard(j)).join('') : '<p class="muted">No applications yet.</p>';
+    document.getElementById('recentJobsList').innerHTML = rj.length ? rj.map(j=>smallCard(j)).join('') : '<p class="muted">No recently viewed jobs.</p>';
+    animateCounter(document.getElementById('savedCount'));
+    animateCounter(document.getElementById('appliedCount'));
+    animateCounter(document.getElementById('recentCount'));
+    renderEmployer();
+  }
+  function renderEmployer(){
+    const posted = JSON.parse(localStorage.getItem('cn_posted') || '[]');
+    const list = document.getElementById('employerJobs');
+    list.innerHTML = posted.length ? posted.map(j=>smallCard(j,{del:true})).join('') : '<p class="muted">No job postings yet. Create one on the left.</p>';
+  }
+  window.deletePost = (id) => {
+    const posted = JSON.parse(localStorage.getItem('cn_posted') || '[]').filter(j => j.id !== id);
+    localStorage.setItem('cn_posted', JSON.stringify(posted));
+    toast('Job deleted');
+    renderEmployer();
+  };
+  document.getElementById('postJobForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const fd = new FormData(e.target);
+    const min = parseInt(fd.get('min'));
+    const max = parseInt(fd.get('max'));
+    if(max < min){ toast('Max salary must be ≥ min'); return; }
+    const job = {
+      id: Date.now(),
+      title: fd.get('title'), company: fd.get('company'),
+      location: fd.get('location'), category: fd.get('category'),
+      type: fd.get('type'), experience: fd.get('experience'),
+      min, max,
+      color: '#6366f1',
+      description: fd.get('description'),
+      responsibilities: ['Drive key initiatives','Collaborate cross-functionally','Ship measurable outcomes'],
+      skills: ['Communication','Ownership','Problem solving'],
+      benefits: ['Health insurance','Flexible hours','Remote options'],
+      posted: 'just now'
+    };
+    const posted = JSON.parse(localStorage.getItem('cn_posted') || '[]');
+    posted.unshift(job);
+    localStorage.setItem('cn_posted', JSON.stringify(posted));
+    toast('Job published!');
+    e.target.reset();
+    renderEmployer();
+  });
+  renderDash();
+</script>
+</body>
+</html>

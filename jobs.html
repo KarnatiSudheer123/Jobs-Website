@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Browse Jobs — CareerNest</title>
+<meta name="description" content="Search and filter thousands of job openings on CareerNest."/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/responive.css">
+</head>
+<body>
+<header class="nav-wrap">
+  <nav class="nav glass">
+    <a href="index.html" class="brand"><span class="brand-mark">◆</span><span>CareerNest</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="jobs.html" class="active">Jobs</a></li>
+      <li><a href="companies.html">Companies</a></li>
+      <li><a href="dashboard.html">Dashboard</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button id="themeToggle" class="icon-btn" aria-label="Toggle theme">🌙</button>
+      <a href="dashboard.html" class="btn btn-primary">Sign In</a>
+      <button id="hamburger" class="icon-btn hamburger" aria-label="Menu">☰</button>
+    </div>
+  </nav>
+</header>
+<section class="page-head">
+  <div class="container">
+    <h1>Find your next role</h1>
+    <p class="lead">Browse <strong id="totalCount">0</strong> opportunities — filter instantly.</p>
+  </div>
+</section>
+<section class="container jobs-layout">
+  <!-- FILTERS -->
+  <aside class="filters glass reveal">
+    <h3>Filters</h3>
+    <label>Search</label>
+    <input id="fQuery" type="text" placeholder="Title or company"/>
+    <label>Category</label>
+    <select id="fCategory">
+      <option value="">All categories</option>
+    </select>
+    <label>Location</label>
+    <select id="fLocation">
+      <option value="">All locations</option>
+    </select>
+    <label>Job Type</label>
+    <div class="chips" id="fType">
+      <button data-val="Full-Time" class="chip">Full-Time</button>
+      <button data-val="Part-Time" class="chip">Part-Time</button>
+      <button data-val="Remote" class="chip">Remote</button>
+      <button data-val="Contract" class="chip">Contract</button>
+    </div>
+    <label>Experience</label>
+    <select id="fExperience">
+      <option value="">Any level</option>
+      <option>Entry</option>
+      <option>Mid</option>
+      <option>Senior</option>
+      <option>Lead</option>
+    </select>
+    <label>Min Salary: $<span id="fSalaryVal">0</span>k</label>
+    <input id="fSalary" type="range" min="0" max="200" step="10" value="0"/>
+    <button class="btn btn-ghost" id="clearFilters">Clear all</button>
+  </aside>
+  <!-- LIST -->
+  <div>
+    <div class="list-head">
+      <div><span id="resultCount">0</span> results</div>
+      <select id="sortBy" class="sort">
+        <option value="recent">Most Recent</option>
+        <option value="salaryDesc">Salary: High → Low</option>
+        <option value="salaryAsc">Salary: Low → High</option>
+      </select>
+    </div>
+    <div id="jobList" class="job-list"></div>
+    <div id="empty" class="empty hidden">No jobs match your filters. Try clearing some.</div>
+  </div>
+</section>
+<!-- JOB MODAL -->
+<div id="jobModal" class="modal-backdrop hidden">
+  <div class="modal glass">
+    <button class="modal-close" id="modalClose">✕</button>
+    <div id="modalContent"></div>
+  </div>
+</div>
+<!-- APPLY MODAL -->
+<div id="applyModal" class="modal-backdrop hidden">
+  <div class="modal glass">
+    <button class="modal-close" id="applyClose">✕</button>
+    <h2>Apply for <span id="applyJobTitle"></span></h2>
+    <form id="applyForm" class="apply-form">
+      <label>Full Name<input name="name" required minlength="2"/></label>
+      <label>Email<input name="email" type="email" required/></label>
+      <label>Phone<input name="phone" type="tel" required pattern="[0-9+\- ]{7,}"/></label>
+      <label>Resume (PDF/DOC)<input name="resume" type="file" accept=".pdf,.doc,.docx" required/></label>
+      <label>Cover Letter<textarea name="cover" rows="4" required minlength="20"></textarea></label>
+      <button class="btn btn-primary" type="submit">Submit Application</button>
+    </form>
+    <div id="applySuccess" class="success hidden">✅ Application submitted! We'll be in touch.</div>
+  </div>
+</div>
+<div id="toast" class="toast hidden"></div>
+<footer class="footer">
+  <div class="container foot-inner">
+    <div><span class="brand-mark">◆</span> CareerNest © 2026</div>
+    <div class="foot-links">
+      <a href="jobs.html">Jobs</a><a href="companies.html">Companies</a><a href="dashboard.html">Dashboard</a>
+    </div>
+  </div>
+</footer>
+<button id="toTop" class="to-top" aria-label="Back to top">↑</button>
+<script src="/js/app.js"></script>
+<script src="/js/jobs.js"></script>
+<script src="/js/filters.js"></script>
+</body>
+</html>

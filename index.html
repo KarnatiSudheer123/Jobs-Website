@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>CareerNest — Find Your Dream Job</title>
+<meta name="description" content="CareerNest is a modern job portal connecting talented candidates with top companies worldwide."/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/responive.css">
+</head>
+<body>
+
+<!-- NAV -->
+<header class="nav-wrap">
+  <nav class="nav glass">
+    <a href="index.html" class="brand">
+      <span class="brand-mark">◆</span>
+      <span>CareerNest</span>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="jobs.html">Jobs</a></li>
+      <li><a href="companies.html">Companies</a></li>
+      <li><a href="dashboard.html">Dashboard</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button id="themeToggle" class="icon-btn" aria-label="Toggle theme">🌙</button>
+      <a href="dashboard.html" class="btn btn-primary">Sign In</a>
+      <button id="hamburger" class="icon-btn hamburger" aria-label="Menu">☰</button>
+    </div>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="container hero-inner">
+    <div class="hero-copy reveal">
+      <span class="pill">🚀 Over 12,000+ jobs added this month</span>
+      <h1>Find the <span class="grad">job</span> that fits your life.</h1>
+      <p class="lead">Discover thousands of opportunities from top companies. Apply in one click and track your career journey.</p>
+      <form class="search-card glass" onsubmit="event.preventDefault(); goSearch();">
+        <div class="search-field">
+          <span>🔍</span>
+          <input id="heroQuery" type="text" placeholder="Job title, keywords, or company"/>
+        </div>
+        <div class="search-field">
+          <span>📍</span>
+          <input id="heroLocation" type="text" placeholder="Location"/>
+        </div>
+        <button class="btn btn-primary search-btn" type="submit">Search Jobs</button>
+      </form>
+      <div class="tags">
+        <span class="tag-label">Trending:</span>
+        <a href="jobs.html?q=Frontend">Frontend</a>
+        <a href="jobs.html?q=Designer">Designer</a>
+        <a href="jobs.html?q=Remote">Remote</a>
+        <a href="jobs.html?q=Data">Data</a>
+      </div>
+    </div>
+    <div class="hero-card glass reveal">
+      <div class="mini-job">
+        <div class="logo" style="background:#6366f1">N</div>
+        <div>
+          <strong>Senior Product Designer</strong>
+          <small>Nimbus · Remote · $110k–$140k</small>
+        </div>
+        <span class="badge">New</span>
+      </div>
+      <div class="mini-job">
+        <div class="logo" style="background:#10b981">F</div>
+        <div>
+          <strong>Frontend Engineer</strong>
+          <small>Acme · Berlin · $90k–$120k</small>
+        </div>
+        <span class="badge alt">Hot</span>
+      </div>
+      <div class="mini-job">
+        <div class="logo" style="background:#f59e0b">M</div>
+        <div>
+          <strong>Data Analyst</strong>
+          <small>Lumen · NYC · $80k–$100k</small>
+        </div>
+        <span class="badge">New</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="container stats reveal">
+  <div class="stat glass"><h3 data-target="25400">0</h3><p>Jobs Posted</p></div>
+  <div class="stat glass"><h3 data-target="1820">0</h3><p>Companies</p></div>
+  <div class="stat glass"><h3 data-target="98000">0</h3><p>Candidates</p></div>
+  <div class="stat glass"><h3 data-target="94">0</h3><p>% Success Rate</p></div>
+</section>
+
+<!-- CATEGORIES -->
+<section class="container section">
+  <div class="section-head reveal">
+    <h2>Popular Categories</h2>
+    <p>Explore roles across the industries hiring most right now.</p>
+  </div>
+  <div class="cat-grid">
+    <a href="jobs.html?cat=Engineering" class="cat reveal"><div class="cat-ico">💻</div><strong>Engineering</strong><small>4,210 jobs</small></a>
+    <a href="jobs.html?cat=Design" class="cat reveal"><div class="cat-ico">🎨</div><strong>Design</strong><small>1,840 jobs</small></a>
+    <a href="jobs.html?cat=Marketing" class="cat reveal"><div class="cat-ico">📣</div><strong>Marketing</strong><small>2,302 jobs</small></a>
+    <a href="jobs.html?cat=Data" class="cat reveal"><div class="cat-ico">📊</div><strong>Data</strong><small>980 jobs</small></a>
+    <a href="jobs.html?cat=Product" class="cat reveal"><div class="cat-ico">📦</div><strong>Product</strong><small>1,120 jobs</small></a>
+    <a href="jobs.html?cat=Finance" class="cat reveal"><div class="cat-ico">💰</div><strong>Finance</strong><small>760 jobs</small></a>
+    <a href="jobs.html?cat=Support" class="cat reveal"><div class="cat-ico">🎧</div><strong>Support</strong><small>1,540 jobs</small></a>
+    <a href="jobs.html?cat=Sales" class="cat reveal"><div class="cat-ico">📈</div><strong>Sales</strong><small>2,012 jobs</small></a>
+  </div>
+</section>
+
+<!-- FEATURED COMPANIES -->
+<section class="container section">
+  <div class="section-head reveal">
+    <h2>Featured Companies</h2>
+    <p>Top employers actively hiring on CareerNest.</p>
+  </div>
+  <div id="featuredCompanies" class="company-grid"></div>
+</section>
+
+<!-- CTA -->
+<section class="container section">
+  <div class="cta glass reveal">
+    <div>
+      <h2>Ready to take the next step?</h2>
+      <p>Create your profile and let employers find you.</p>
+    </div>
+    <div class="cta-actions">
+      <a href="dashboard.html" class="btn btn-primary">Create Profile</a>
+      <a href="jobs.html" class="btn btn-ghost">Browse Jobs</a>
+    </div>
+  </div>
+</section>
+<footer class="footer">
+  <div class="container foot-inner">
+    <div><span class="brand-mark">◆</span> CareerNest © 2026</div>
+    <div class="foot-links">
+      <a href="jobs.html">Jobs</a>
+      <a href="companies.html">Companies</a>
+      <a href="dashboard.html">Dashboard</a>
+    </div>
+  </div>
+</footer>
+<button id="toTop" class="to-top" aria-label="Back to top">↑</button>
+<script src="/js/app.js"></script>
+<script src="/js/jobs.js"></script>
+<script>
+
+  // featured companies on home
+  document.addEventListener('DOMContentLoaded', () => {
+    const wrap = document.getElementById('featuredCompanies');
+    if (wrap) {
+      wrap.innerHTML = COMPANIES.slice(0,6).map(c => `
+        <a href="jobs.html?company=${encodeURIComponent(c.name)}" class="company glass reveal">
+          <div class="logo" style="background:${c.color}">${c.name[0]}</div>
+          <strong>${c.name}</strong>
+          <small>${c.industry}</small>
+          <div class="rating">★ ${c.rating} · ${c.openings} openings</div>
+        </a>
+      `).join('');
+      initReveal();
+    }
+  });
+  function goSearch(){
+    const q = document.getElementById('heroQuery').value.trim();
+    const l = document.getElementById('heroLocation').value.trim();
+    const p = new URLSearchParams();
+    if(q) p.set('q', q);
+    if(l) p.set('loc', l);
+    location.href = 'jobs.html' + (p.toString() ? '?' + p.toString() : '');
+  }
+</script>
+</body>
+</html>
